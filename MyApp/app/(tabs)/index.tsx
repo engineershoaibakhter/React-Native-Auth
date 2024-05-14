@@ -1,4 +1,5 @@
 import { Image, StyleSheet,View,Text, Platform } from 'react-native';
+import {Link} from 'expo-router'
 
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
@@ -9,8 +10,8 @@ export default function HomeScreen() {
     <ThemedView style={styles.container}>
       <Image style={styles.bgImage} source={require('../../assets/images/bg-auth-image.png')}></Image>
       <View style={styles.textContent}>
-        <ThemedText style={styles.textLogin}>Login</ThemedText>
-        <ThemedText style={styles.textRegister}>Register</ThemedText>
+       <Link href='../screens/login' style={styles.textLogin}>Login</Link>
+       <Link href='../screens/register' style={styles.textRegister}>Register</Link>
       </View>
     </ThemedView>
     </>
