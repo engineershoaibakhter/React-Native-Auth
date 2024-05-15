@@ -41,6 +41,16 @@ export default function RootLayout() {
             },
           }}
         />
+        <Stack.Screen 
+        name='screens/register'
+        options={{
+          title:'Register',
+          headerTitleStyle:{
+            fontWeight:"500",
+            fontSize:30
+          }
+        }}
+        />
       </Stack>
     </ThemeProvider>
   );
