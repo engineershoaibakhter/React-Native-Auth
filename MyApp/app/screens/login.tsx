@@ -24,12 +24,28 @@ const login = () => {
             <View style={styles.inputPasswordContainer}>
             <TextInput placeholder="Enter your Password" placeholderTextColor={"black"} style={styles.textPasswordInput} secureTextEntry={!passwordVisible}></TextInput>
                 <TouchableOpacity style={styles.eyeIcon} onPress={()=>setPasswordVisible(!passwordVisible)}>
-                <Ionicons name={passwordVisible ? 'eye-off' : 'eye'}size={30} color="black"/>
+                <Ionicons name={passwordVisible ? 'eye' : 'eye-off'}size={30} color="black"/>
                 </TouchableOpacity>
             </View>
 
-            <View style={styles.forgotPasswordContainer}>
-                <Link href={'./forgot-password'} style={styles.forgotPasswordText}>Forgot Password?</Link>
+            <View>
+                <Link href={'./forgot-password'} style={styles.forgotPassword}>Forgot Password?</Link>
+            </View>
+
+            <Pressable style={styles.loginButton}>
+                <Text style={styles.loginButtonText}>Login</Text>
+            </Pressable>
+
+            <View style={styles.orContainer}>
+              <View style={styles.line} />
+              <Text style={styles.orText}>Or Login with</Text>
+              <View style={styles.line} />
+            </View>
+
+            <View style={styles.socialLoginContainer}>
+              <Pressable style={styles.socialButton}><Text>Facebook</Text></Pressable>
+              <Pressable style={styles.socialButton}><Text>Google</Text></Pressable>
+              <Pressable style={styles.socialButton}><Text>Apple</Text></Pressable>
             </View>
             
             
@@ -90,5 +106,50 @@ const styles = StyleSheet.create({
   eyeIcon: {
     marginLeft: 10,
   },
-  
+forgotPassword:{
+    padding:10,
+      textAlign:"right",
+    fontSize:17
+  },
+  loginButton:{
+    backgroundColor:'black',
+    borderRadius:10,
+    margin:15,
+    height:50,
+    justifyContent:"center",
+    alignItems:"center"
+},
+loginButtonText:{
+    color:'white',
+    fontSize: 25,
+    fontWeight: "400",
+  },
+  orContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  line: {
+    flex: 1,
+    height: 0.5,
+    backgroundColor: 'grey',
+  },
+  orText: {
+    marginHorizontal: 10,
+    fontSize: 16,
+  },
+  socialLoginContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 20,
+  },
+  socialButton: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 10,
+    marginHorizontal: 5,
+    borderWidth: 0.5,
+    borderColor: 'grey',
+    borderRadius: 5,
+  },
 });
