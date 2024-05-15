@@ -51,6 +51,16 @@ export default function RootLayout() {
           }
         }}
         />
+        <Stack.Screen 
+        name='screens/forgot-password'
+        options={{
+          title:'Forgot Password',
+          headerTitleStyle:{
+            fontWeight:"500",
+            fontSize:30
+          }
+        }}
+        />
       </Stack>
     </ThemeProvider>
   );
