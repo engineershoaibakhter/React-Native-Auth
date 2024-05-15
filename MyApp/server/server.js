@@ -20,7 +20,7 @@ mongoose.connect(process.env.MONGO_URI,{
 .catch((error)=>console.error("Mongodb is not connected because of "+error))
 
 // Routes
-app.use('/api/auth',require('./routes/auth'));
+// app.use('/api/auth',require('./routes/auth'));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT,()=>console.log(`Server is running on PORT ${PORT}`));
