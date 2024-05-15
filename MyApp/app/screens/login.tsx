@@ -2,7 +2,7 @@ import { ScrollView,TouchableOpacity,TextInput,KeyboardAvoidingView, StyleSheet,
 import React from "react";
 import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import {Link} from 'expo-router'
 
 
@@ -10,7 +10,7 @@ const login = () => {
     const [passwordVisible,setPasswordVisible]=React.useState(false);
   return (
     <ScrollView indicatorStyle={"black"} style={{ padding: 10 }}>
-        <KeyboardAvoidingView behavior={Platform.OS==="ios"?"padding":"height"}>
+        <KeyboardAvoidingView behavior={Platform.OS==="ios"?"padding":"height"} keyboardVerticalOffset={Platform.select({ ios: 0, android: 1000 })}>
       <View style={styles.loginContainer}>
         <View style={styles.loginHeading}>
           <Text style={styles.loginHeadingContent}>
@@ -43,9 +43,15 @@ const login = () => {
             </View>
 
             <View style={styles.socialLoginContainer}>
-              <Pressable style={styles.socialButton}><Text>Facebook</Text></Pressable>
-              <Pressable style={styles.socialButton}><Text>Google</Text></Pressable>
-              <Pressable style={styles.socialButton}><Text>Apple</Text></Pressable>
+              <Pressable style={styles.socialButton}>
+              <FontAwesome name="facebook" size={40} color="blue" />
+              </Pressable>
+              <Pressable style={styles.socialButton}>
+              <FontAwesome name="google" size={40} color="red" />
+              </Pressable>
+              <Pressable style={styles.socialButton}>
+              <FontAwesome name="apple" size={40} color="black" />
+              </Pressable>
             </View>
             
             
