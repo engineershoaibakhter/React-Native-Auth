@@ -8,6 +8,7 @@ import {Link} from 'expo-router'
 
 const login = () => {
     const [passwordVisible,setPasswordVisible]=React.useState(false);
+    const [isPressingLogin, setIsPressingLogin] = React.useState(false);
   return (
     <ScrollView indicatorStyle={"black"} style={{ padding: 10 }}>
         <KeyboardAvoidingView behavior={Platform.OS==="ios"?"padding":"height"} keyboardVerticalOffset={Platform.select({ ios: 0, android: 1000 })}>
@@ -32,8 +33,8 @@ const login = () => {
                 <Link href={'./forgot-password'} style={styles.forgotPassword}>Forgot Password?</Link>
             </View>
 
-            <Pressable style={styles.loginButton}>
-                <Text style={styles.loginButtonText}>Login</Text>
+            <Pressable style={[styles.loginButton, isPressingLogin && styles.buttonPressing]} onPressIn={()=>setIsPressingLogin(true)} onPressOut={() => setIsPressingLogin(false)}>
+                <Text style={[styles.loginButtonText,isPressingLogin && styles.textProssing ]}>Login</Text>
             </Pressable>
 
             <View style={styles.orContainer}>
@@ -54,7 +55,11 @@ const login = () => {
               </Pressable>
             </View>
             
-            
+            <View style={styles.registerLinkContainer}>
+              <Text style={styles.registerLinkText}>
+              Don’t have an account? <Link href='./register' style={styles.registerLink}>Register Now</Link>
+              </Text>
+            </View>
 
         </View>
       </View>
@@ -70,7 +75,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   loginHeading: {
-    marginTop: 100,
+    marginTop: 60,
   },
   loginHeadingContent: {
     fontSize: 30,
@@ -158,4 +163,20 @@ loginButtonText:{
     borderColor: 'grey',
     borderRadius: 5,
   },
+  registerLinkContainer:{
+    marginTop:120,
+    alignItems:"center",
+  },
+  registerLinkText:{
+    fontSize:20
+  },
+  registerLink:{
+    fontWeight:"500"
+  },
+  buttonPressing: {
+    backgroundColor: '#d3d3d3',
+},
+textProssing:{
+  color:"black"
+}
 });
