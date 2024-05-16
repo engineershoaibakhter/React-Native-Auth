@@ -34,9 +34,6 @@ export default function OtpVerification() {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton}>
-        <Text style={styles.backButtonText}>{'<'}</Text>
-      </TouchableOpacity>
       <Text style={styles.title}>OTP Verification</Text>
       <Text style={styles.subtitle}>Enter the verification code we just sent on your email address.</Text>
       <View style={styles.otpContainer}>
@@ -66,27 +63,19 @@ export default function OtpVerification() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    // backgroundColor: '#fff',
     paddingHorizontal: 20,
-    justifyContent: 'center',
+    // justifyContent: 'flex-start',
+    marginTop:100,
     alignItems: 'center',
   },
-  backButton: {
-    position: 'absolute',
-    top: 40,
-    left: 20,
-  },
-  backButtonText: {
-    fontSize: 24,
-    color: '#000',
-  },
   title: {
-    fontSize: 24,
-    fontWeight: 'bold',
+    fontSize: 40,
+    fontWeight: "500",
     marginBottom: 10,
   },
   subtitle: {
-    fontSize: 16,
+    fontSize: 20,
     textAlign: 'center',
     marginBottom: 40,
   },
@@ -96,27 +85,30 @@ const styles = StyleSheet.create({
     marginBottom: 40,
   },
   otpInput: {
-    width: 50,
-    height: 50,
+    width: 65,
+    height: 65,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 10,
     textAlign: 'center',
-    fontSize: 18,
+    fontSize: 25,
+    fontWeight:"500",
+    backgroundColor:"white",
+    marginHorizontal:10
   },
   verifyButton: {
     backgroundColor: '#000',
-    paddingVertical: 15,
-    paddingHorizontal: 80,
+    paddingVertical: 10,
+    paddingHorizontal: 110,
     borderRadius: 10,
     marginBottom: 20,
   },
   verifyButtonText: {
     color: '#fff',
-    fontSize: 18,
+    fontSize: 30,
   },
   resendText: {
-    fontSize: 16,
+    fontSize: 20,
   },
   resendLink: {
     fontWeight: 'bold',
