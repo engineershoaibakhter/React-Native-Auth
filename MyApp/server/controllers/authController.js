@@ -10,7 +10,7 @@ const generateSecretKey = () => {
     return secretKey;
   };
   
-  const secretKey = generateSecretKey();
+export const secretKey = generateSecretKey();
 
 exports.register= async (req,res)=>{
     const {name,email,password}=req.body;
