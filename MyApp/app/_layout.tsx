@@ -61,6 +61,16 @@ export default function RootLayout() {
           }
         }}
         />
+         <Stack.Screen 
+        name='screens/otp-verification'
+        options={{
+          title:'OTP Verification',
+          headerTitleStyle:{
+            fontWeight:"500",
+            fontSize:30
+          }
+        }}
+        />
       </Stack>
     </ThemeProvider>
   );

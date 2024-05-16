@@ -1,13 +1,15 @@
 import { ScrollView,TouchableOpacity,TextInput,KeyboardAvoidingView, StyleSheet, Text, View, Platform, Pressable } from "react-native";
 import React from "react";
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
-import {Link} from 'expo-router'
+import {Link,useRouter} from 'expo-router'
 
 
 const Register = () => {
     const [passwordVisible,setPasswordVisible]=React.useState(false);
     const [confirmPasswordVisible,setConfirmPasswordVisible]=React.useState(false);
     const [isPressingLogin, setIsPressingLogin] = React.useState(false);
+    const router = useRouter();
+
   return (
     <ScrollView indicatorStyle={"black"} style={{ padding: 10 }}>
         <KeyboardAvoidingView behavior={Platform.OS==="ios"?"padding":"height"} keyboardVerticalOffset={Platform.select({ ios: 0, android: 1000 })}>
@@ -35,7 +37,7 @@ const Register = () => {
                 </TouchableOpacity>
             </View>
 
-            <Pressable style={[styles.loginButton, isPressingLogin && styles.buttonPressing]} onPressIn={()=>setIsPressingLogin(true)} onPressOut={() => setIsPressingLogin(false)}>
+            <Pressable onPress={()=>router.push('screens/otp-verification')} style={[styles.loginButton, isPressingLogin && styles.buttonPressing]} onPressIn={()=>setIsPressingLogin(true)} onPressOut={() => setIsPressingLogin(false)}>
                 <Text style={[styles.loginButtonText,isPressingLogin && styles.textProssing ]}>Register</Text>
             </Pressable>
 
