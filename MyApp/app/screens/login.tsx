@@ -1,14 +1,40 @@
 import { ScrollView,TouchableOpacity,TextInput,KeyboardAvoidingView, StyleSheet, Text, View, Platform, Pressable } from "react-native";
 import React from "react";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
-import {Link} from 'expo-router'
+import {Link,useRouter} from 'expo-router'
+import axios from 'axios';
 
 
 const login = () => {
+    const [email,setEmail]=React.useState('');
+    const [password,setPassword]=React.useState(''); 
     const [passwordVisible,setPasswordVisible]=React.useState(false);
     const [isPressingLogin, setIsPressingLogin] = React.useState(false);
+    const [error,setError]=React.useState('')
+
+    const router=useRouter();
+
+    const handleLogin=async ()=>{
+      if(!email || !password){
+        setError('Please fill all the fields');
+        return;
+      }
+
+      try {
+        const response=await axios.post('exp://192.168.194.166:8081/api/auth/login',{email,password});
+        if(response.data.success){
+          router.push('./register.tsx');
+        }
+        else{
+          setError(response.data.message);
+          alert("The data is not send");
+        }
+
+      } catch (error) {
+        setError('An error Occurred. Please try again. '+error);
+      }
+    };
+
   return (
     <ScrollView indicatorStyle={"black"} style={{ padding: 10 }}>
         <KeyboardAvoidingView behavior={Platform.OS==="ios"?"padding":"height"} keyboardVerticalOffset={Platform.select({ ios: 0, android: 1000 })}>
@@ -20,10 +46,10 @@ const login = () => {
         </View>
         <View style={styles.inputContainer}>
             
-            <TextInput placeholder="Enter your Email" placeholderTextColor={"black"} style={styles.textEmailInput} keyboardType="email-address"></TextInput>
+            <TextInput placeholder="Enter your Email" placeholderTextColor={"black"} style={styles.textEmailInput} keyboardType="email-address" value={email} onChangeText={setEmail}></TextInput>
             
             <View style={styles.inputPasswordContainer}>
-            <TextInput placeholder="Enter your Password" placeholderTextColor={"black"} style={styles.textPasswordInput} secureTextEntry={!passwordVisible}></TextInput>
+            <TextInput placeholder="Enter your Password" placeholderTextColor={"black"} style={styles.textPasswordInput} secureTextEntry={!passwordVisible} value={password} onChangeText={setPassword}></TextInput>
                 <TouchableOpacity style={styles.eyeIcon} onPress={()=>setPasswordVisible(!passwordVisible)}>
                 <Ionicons name={passwordVisible ? 'eye' : 'eye-off'}size={30} color="black"/>
                 </TouchableOpacity>
@@ -33,7 +59,7 @@ const login = () => {
                 <Link href={'./forgot-password'} style={styles.forgotPassword}>Forgot Password?</Link>
             </View>
 
-            <Pressable style={[styles.loginButton, isPressingLogin && styles.buttonPressing]} onPressIn={()=>setIsPressingLogin(true)} onPressOut={() => setIsPressingLogin(false)}>
+            <Pressable style={[styles.loginButton, isPressingLogin && styles.buttonPressing]} onPressIn={()=>setIsPressingLogin(true)} onPressOut={() => setIsPressingLogin(false)} onPress={handleLogin}>
                 <Text style={[styles.loginButtonText,isPressingLogin && styles.textProssing ]}>Login</Text>
             </Pressable>
 
