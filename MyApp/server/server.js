@@ -1,11 +1,15 @@
 const express=require('express');
 const mongoose=require('mongoose');
+// const bodyParser=require('body-parser');
+const crypto=require('crypto');
 const dotenv=require('dotenv');
 const cors= require('cors');
 
 dotenv.config();
 
 const app=express();
+
+// app.use(bodyParser.json());
 
 // Middleware
 app.use(express.json());
