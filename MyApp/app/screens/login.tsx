@@ -55,6 +55,8 @@ const login = () => {
                 </TouchableOpacity>
             </View>
 
+            {error? <Text style={styles.errorText}>{error}</Text>:null}
+
             <View>
                 <Link href={'./forgot-password'} style={styles.forgotPassword}>Forgot Password?</Link>
             </View>
@@ -204,5 +206,11 @@ loginButtonText:{
 },
 textProssing:{
   color:"black"
+},
+errorText:{
+  color:"red",
+  textAlign:'center',
+  marginBottom:10
 }
+
 });

@@ -2,13 +2,43 @@ import { ScrollView,TouchableOpacity,TextInput,KeyboardAvoidingView, StyleSheet,
 import React from "react";
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
 import {Link,useRouter} from 'expo-router'
+import axios from 'axios';
 
 
 const Register = () => {
     const [passwordVisible,setPasswordVisible]=React.useState(false);
     const [confirmPasswordVisible,setConfirmPasswordVisible]=React.useState(false);
     const [isPressingLogin, setIsPressingLogin] = React.useState(false);
+    const [username,setUsername]=React.useState('');
+    const [email,setEmail]=React.useState('');
+    const [password,setPassword]=React.useState('');
+    const [confirmPassword,setConfirmPassword]=React.useState('');
+    const [error,setError]=React.useState('');
+
     const router = useRouter();
+
+    const handleRegister= async ()=>{
+      if(!username || !email || !password || !confirmPassword){
+        setError('Please fill in all fields.');
+        return;
+      }
+      if(password !== confirmPassword){
+        setError('Password and Confirm Password do not match.');
+        return;
+      }
+
+      try {
+        const response=await axios.post('exp://192.168.194.166:8081/api/auth/register',{username,email,password});
+        if(response.data.success){
+          router.push('./otp-verification');
+        }
+        else{
+          setError(response.data.message);
+        }
+      } catch (error) {
+        setError('An error occurred. Please try again. '+error);
+      }
+    }
 
   return (
     <ScrollView indicatorStyle={"black"} style={{ padding: 10 }}>
@@ -21,23 +51,25 @@ const Register = () => {
         </View>
         <View style={styles.inputContainer}>
 
-        <TextInput placeholder="Username" placeholderTextColor={"black"} style={styles.textInput}></TextInput>
-            <TextInput placeholder="Email" placeholderTextColor={"black"} style={styles.textInput} keyboardType="email-address"></TextInput>
+        <TextInput placeholder="Username" placeholderTextColor={"black"} style={styles.textInput} value={username} onChangeText={setUsername}></TextInput>
+        <TextInput placeholder="Email" placeholderTextColor={"black"} style={styles.textInput} keyboardType="email-address" value={email} onChangeText={setEmail}></TextInput>
             
             <View style={styles.inputPasswordContainer}>
-            <TextInput placeholder="Password" placeholderTextColor={"black"} style={styles.textPasswordInput} secureTextEntry={!passwordVisible}></TextInput>
+            <TextInput placeholder="Password" placeholderTextColor={"black"} style={styles.textPasswordInput} secureTextEntry={!passwordVisible} value={password} onChangeText={setPassword}></TextInput>
                 <TouchableOpacity style={styles.eyeIcon} onPress={()=>setPasswordVisible(!passwordVisible)}>
                 <Ionicons name={passwordVisible ? 'eye' : 'eye-off'}size={30} color="black"/>
                 </TouchableOpacity>
             </View>
             <View style={styles.inputPasswordContainer}>
-            <TextInput placeholder="Password" placeholderTextColor={"black"} style={styles.textPasswordInput} secureTextEntry={!confirmPasswordVisible}></TextInput>
+            <TextInput placeholder="Password" placeholderTextColor={"black"} style={styles.textPasswordInput} secureTextEntry={!confirmPasswordVisible} value={confirmPassword} onChangeText={setConfirmPassword}></TextInput>
                 <TouchableOpacity style={styles.eyeIcon} onPress={()=>setConfirmPasswordVisible(!confirmPasswordVisible)}>
                 <Ionicons name={confirmPasswordVisible ? 'eye' : 'eye-off'} size={30} color="black"/>
                 </TouchableOpacity>
             </View>
 
-            <Pressable onPress={()=>router.push('screens/otp-verification')} style={[styles.loginButton, isPressingLogin && styles.buttonPressing]} onPressIn={()=>setIsPressingLogin(true)} onPressOut={() => setIsPressingLogin(false)}>
+            {error? <Text style={styles.errorText}>{error}</Text>: null}
+
+            <Pressable onPress={handleRegister} style={[styles.loginButton, isPressingLogin && styles.buttonPressing]} onPressIn={()=>setIsPressingLogin(true)} onPressOut={() => setIsPressingLogin(false)}>
                 <Text style={[styles.loginButtonText,isPressingLogin && styles.textProssing ]}>Register</Text>
             </Pressable>
 
@@ -178,5 +210,11 @@ loginButtonText:{
 },
 textProssing:{
   color:"black"
+},
+errorText:{
+  color:"red",
+  textAlign:"center",
+  marginBottom:10
 }
+
 });
