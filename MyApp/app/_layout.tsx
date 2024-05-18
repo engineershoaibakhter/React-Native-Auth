@@ -74,7 +74,7 @@ export default function RootLayout() {
          <Stack.Screen 
         name='screens/reset-password'
         options={{
-          title:'OTP Verification',
+          title:'Reset Password',
           headerTitleStyle:{
             fontWeight:"500",
             fontSize:30

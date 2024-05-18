@@ -1,7 +1,7 @@
 import { ScrollView,TouchableOpacity,TextInput,KeyboardAvoidingView, StyleSheet, Text, View, Platform, Pressable } from "react-native";
 import React from "react";
 import { Ionicons, FontAwesome } from '@expo/vector-icons';
-import {Link} from 'expo-router'
+import {Link,useRouter} from 'expo-router'
 import axios from 'axios';
 
 
@@ -10,10 +10,14 @@ const forgotPassword = () => {
     const [error,setError]=React.useState('')
     const [isPressingSendingCode, setIsPressingSendingCode] = React.useState(false);
 
+    const router=useRouter();
+
     const sendCode=async ()=>{
       try {
-        const response=await axios.post('http://192.168.0.18:5000/api/auth/reset_password',{email})
+        const response=await axios.post('http://192.168.0.18:5000/api/auth/forgot_password',{email})
+        router.push({pathname:'./reset-password',params: { email }})
         alert("Email is sent with successfully. Please check your Email")  
+
       } catch (error) {
         setError("User Not Found")
         console.log(error);

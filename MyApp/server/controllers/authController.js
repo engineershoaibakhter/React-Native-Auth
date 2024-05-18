@@ -181,30 +181,57 @@ const login = async (req, res) => {
 
 // Password Reset Endpoint
 
-const reset_password = async (req, res) => {
+const forgot_password = async (req, res) => {
   const { email } = req.body;
   const user = await User.findOne({ email });
   if (!user) {
     return res.status(400).json({ message: "User not found" });
   }
-  // const newPassword = crypto.randomBytes(6).toString("hex");
-  // user.password = newPassword;
-  // await user.save();
 
   const mailOptions = {
     from: process.env.EMAIL_OF_TRANSPORTER,
     to: email,
     subject: "Password Reset",
-    text: `Please click this link for reset your password ${newPassword}`,
+    html: `<p>Please click <a href="http://localhost:8081/screens/reset-password">here</a> to reset your password.</p>`
   };
 
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
       console.error(err);
-      return res.status(500).json({ message: "Failed to send new password" });
+      return res.status(500).json({ message: "Failed to send Reset Password" });
     }
-    res.status(200).json({ success: true, message: "New password sent" });
+    return res.status(200).json({ success: true, message: "Reset Password sent" });
+  });
+
+};
+
+const reset_password = async (req, res) => {
+  const { email,password } = req.body;
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword= await bcrypt.hash(password,salt);
+
+  const updateUserPassword = await User.findOneAndUpdate({ email },{password:hashedPassword},{new:true});
+
+
+
+  if (!updateUserPassword) {
+    return res.status(400).json({ message: "The password is not updated" });
+  }
+
+  const mailOptions = {
+    from: process.env.EMAIL_OF_TRANSPORTER,
+    to: email,
+    subject: "Password Reset Successfully",
+    text: `Congratulations! The password has been updated. Here is your new Password: ${password}`,
+  };
+
+  transporter.sendMail(mailOptions, (err, info) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).json({ message: "Failed to reset new Password" });
+    }
+    res.status(200).json({ success: true, message: "Congratulations! The password has been updated" });
   });
 };
 
-module.exports = { register, verify_otp, resend_otp, login, reset_password };
+module.exports = { register, verify_otp, resend_otp, login, reset_password,forgot_password };

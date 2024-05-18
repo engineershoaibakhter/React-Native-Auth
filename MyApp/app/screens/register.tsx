@@ -100,7 +100,7 @@ const Register = () => {
             </View>
             <View style={styles.inputPasswordContainer}>
               <TextInput
-                placeholder="Password"
+                placeholder="Confirm Password"
                 placeholderTextColor={"black"}
                 style={styles.textPasswordInput}
                 secureTextEntry={!confirmPasswordVisible}
@@ -212,7 +212,7 @@ const styles = StyleSheet.create({
     borderColor: "black",
     borderWidth: 2,
     paddingRight: 10,
-    height: 70,
+    height: 60,
     width: "100%",
     marginBottom: 20,
   },
