@@ -1,9 +1,14 @@
 import React, { useRef, useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
+import axios from 'axios';
+import { useRouter,useLocalSearchParams } from 'expo-router';
 
 export default function OtpVerification() {
   const [otp, setOtp] = useState<string[]>(['', '', '', '']);
+  const [error, setError] = useState<string>('');
   const inputs = useRef<(TextInput | null)[]>([]);
+  const router = useRouter();
+  const { email } = useLocalSearchParams();
 
   const handleChange = (text: string, index: number) => {
     let newOtp = [...otp];
@@ -22,14 +27,35 @@ export default function OtpVerification() {
     }
   };
 
-  const handleVerify = () => {
-    // Add verification logic here
-    alert('OTP Verified: ' + otp.join(''));
+  const handleVerify = async () => {
+    try {
+      
+      const response = await axios.post('http://192.168.0.18:5000/api/auth/verify_otp', {
+        email, 
+        otp: otp.join('')
+      });
+
+      
+        router.push('./login'); // Navigate to home page
+        alert("OTP success")
+      
+    } catch (error) {
+      setError('The OTP is wrong '+error);
+    }
   };
 
-  const handleResend = () => {
-    // Add resend logic here
-    alert('OTP Resent');
+  const handleResend = async () => {
+    try {
+      const response = await axios.post('http://192.168.0.18:5000/api/auth/resend_otp', {
+        email,
+      });
+
+      
+        alert('OTP Resent');
+      
+    } catch (error) {
+      setError('The OTP is wrong '+error);
+    }
   };
 
   return (
@@ -50,11 +76,12 @@ export default function OtpVerification() {
           />
         ))}
       </View>
+      {error ? <Text style={styles.errorText}>{error}</Text> : null}
       <TouchableOpacity style={styles.verifyButton} onPress={handleVerify}>
         <Text style={styles.verifyButtonText}>Verify</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={handleResend}>
-        <Text style={styles.resendText}>Didn't received code? <Text style={styles.resendLink}>Resend</Text></Text>
+        <Text style={styles.resendText}>Didn't receive code? <Text style={styles.resendLink}>Resend</Text></Text>
       </TouchableOpacity>
     </View>
   );
@@ -63,10 +90,8 @@ export default function OtpVerification() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#fff',
     paddingHorizontal: 20,
-    // justifyContent: 'flex-start',
-    marginTop:100,
+    marginTop: 100,
     alignItems: 'center',
   },
   title: {
@@ -92,9 +117,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     textAlign: 'center',
     fontSize: 25,
-    fontWeight:"500",
-    backgroundColor:"white",
-    marginHorizontal:10
+    fontWeight: "500",
+    backgroundColor: "white",
+    marginHorizontal: 10,
   },
   verifyButton: {
     backgroundColor: '#000',
@@ -112,5 +137,9 @@ const styles = StyleSheet.create({
   },
   resendLink: {
     fontWeight: 'bold',
+  },
+  errorText: {
+    color: 'red',
+    marginBottom: 20,
   },
 });

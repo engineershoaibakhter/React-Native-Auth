@@ -21,17 +21,12 @@ const login = () => {
       }
 
       try {
-        const response=await axios.post('exp://192.168.194.166:8081/api/auth/login',{email,password});
-        if(response.data.success){
-          router.push('./register.tsx');
-        }
-        else{
-          setError(response.data.message);
-          alert("The data is not send");
-        }
+        const response=await axios.post('http://localhost:5000/api/auth/login',{email,password});
+        
+          router.push('./register');
 
       } catch (error) {
-        setError('An error Occurred. Please try again. '+error);
+        setError('Credential Failed. '+error);
       }
     };
 

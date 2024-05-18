@@ -2,7 +2,7 @@ const jwt=require('jsonwebtoken');
 const User=require('../models/User');
 const secretKey=require('../controllers/authController')
 
-exports.protect=async (req,res,next)=>{
+const protect=async (req,res,next)=>{
     let token;
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){
         token=req.headers.authorization.split(' ')[1];
@@ -22,3 +22,5 @@ exports.protect=async (req,res,next)=>{
         console.log(`Not Authorized because of ${error}`);
     }
 }
+
+module.exports={protect}

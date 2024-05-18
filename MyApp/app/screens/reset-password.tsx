@@ -5,7 +5,7 @@ import {Link} from 'expo-router'
 import axios from 'axios';
 
 
-const forgotPassword = () => {
+const resetPassword = () => {
     const [email,setEmail]=React.useState('');
     const [error,setError]=React.useState('')
     const [isPressingSendingCode, setIsPressingSendingCode] = React.useState(false);
@@ -44,7 +44,7 @@ const forgotPassword = () => {
   );
 };
 
-export default forgotPassword;
+export default resetPassword;
 
 const styles = StyleSheet.create({
   sendingContainer: {
