@@ -30,13 +30,13 @@ export default function OtpVerification() {
   const handleVerify = async () => {
     try {
       
-      const response = await axios.post('http://192.168.0.18:5000/api/auth/verify_otp', {
+      const response = await axios.post('http://localhost:5000/api/auth/verify_otp', {
         email, 
         otp: otp.join('')
       });
 
       
-        router.push('./login'); // Navigate to home page
+        router.push('./main');
         alert("OTP success")
       
     } catch (error) {
@@ -46,7 +46,7 @@ export default function OtpVerification() {
 
   const handleResend = async () => {
     try {
-      const response = await axios.post('http://192.168.0.18:5000/api/auth/resend_otp', {
+      const response = await axios.post('http://localhost:5000/api/auth/resend_otp', {
         email,
       });
 

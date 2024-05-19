@@ -123,10 +123,18 @@ const resend_otp = async (req, res) => {
       return res.status(400).json({ message: "User not found" });
     }
 
-    const otp = otpGenerator.generate(4, {
-      uppercase: false,
-      specialChars: false,
-    });
+
+    function generateNumericOTP(length) {
+      const digits = '0123456789';
+      let OTP = '';
+      for (let i = 0; i < length; i++) {
+        OTP += digits[Math.floor(Math.random() * 10)];
+      }
+      return OTP;
+    }
+    
+    const otp = generateNumericOTP(4);
+
     user.otp = otp;
     user.otpExpires = Date.now() + 3600000; // 1 hour
     await user.save();

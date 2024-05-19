@@ -23,7 +23,7 @@ const login = () => {
       try {
         const response=await axios.post('http://localhost:5000/api/auth/login',{email,password});
         
-          router.push('./register');
+          router.push('./main');
 
       } catch (error) {
         setError('Credential Failed. '+error);

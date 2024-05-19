@@ -81,6 +81,16 @@ export default function RootLayout() {
           }
         }}
         />
+         <Stack.Screen 
+        name='screens/main'
+        options={{
+          title:'Main Screen',
+          headerTitleStyle:{
+            fontWeight:"500",
+            fontSize:30
+          }
+        }}
+        />
       </Stack>
     </ThemeProvider>
   );
