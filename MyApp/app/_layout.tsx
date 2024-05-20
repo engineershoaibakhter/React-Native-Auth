@@ -2,8 +2,9 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import 'react-native-reanimated';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -25,6 +26,15 @@ export default function RootLayout() {
   if (!loaded) {
     return null;
   }
+
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = await AsyncStorage.getItem('token');
+      setIsAuthenticated(!!token);
+    };
+    checkAuth();
+  }, []);
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
@@ -81,7 +91,26 @@ export default function RootLayout() {
           }
         }}
         />
-         <Stack.Screen 
+
+{isAuthenticated ? (
+          <Stack.Screen name="screens/main"  options={{
+            title:'Main Screen',
+            headerTitleStyle:{
+              fontWeight:"500",
+              fontSize:30
+            }
+          }} />
+        ) : (
+          <Stack.Screen name="screen/login" options={{
+            title: 'Login',
+            headerTitleStyle: {
+              fontWeight: '500',
+              fontSize:30
+            },
+          }} />
+        )}
+
+         {/* <Stack.Screen 
         name='screens/main'
         options={{
           title:'Main Screen',
@@ -90,7 +119,7 @@ export default function RootLayout() {
             fontSize:30
           }
         }}
-        />
+        /> */}
       </Stack>
     </ThemeProvider>
   );

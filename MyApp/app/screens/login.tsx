@@ -21,7 +21,7 @@ const login = () => {
       }
 
       try {
-        const response=await axios.post('http://localhost:5000/api/auth/login',{email,password});
+        const response=await axios.post('http://192.168.10.7:5000/api/auth/login',{email,password});
         
           router.push('./main');
 

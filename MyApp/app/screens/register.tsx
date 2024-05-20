@@ -39,7 +39,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/auth/register`,
+        `http://192.168.10.7:5000/api/auth/register`,
         { username, email, password }
       );
       router.push({ pathname: "./otp-verification", params: { email } });

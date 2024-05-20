@@ -39,7 +39,7 @@ import {
   
       try {
         const response = await axios.post(
-          `http://localhost:5000/api/auth/reset_password`,
+          `http://192.168.10.7:5000/api/auth/reset_password`,
           { email,password }
         );
         alert("Your Password is reset")

@@ -92,15 +92,15 @@ const register = async (req, res) => {
 
 const verify_otp = async (req, res) => {
   const { email, otp } = req.body;
+  console.log(otp);
 
   const currentDateUTC = new Date();
   const currentDatePKT = new Date(currentDateUTC.getTime() + (5 * 60 * 60 * 1000));
 
-
   const updatedUser = await User.findOneAndUpdate({
     email,
     otp,
-    otpExpires: { $gt:currentDatePKT },
+    otpExpires: { $lt:currentDatePKT },
   }, { otp: null, otpExpires: null }, { new: true });
   
   if (!updatedUser) {

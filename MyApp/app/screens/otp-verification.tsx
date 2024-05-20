@@ -30,7 +30,7 @@ export default function OtpVerification() {
   const handleVerify = async () => {
     try {
       
-      const response = await axios.post('http://localhost:5000/api/auth/verify_otp', {
+      const response = await axios.post('http://192.168.10.7:5000/api/auth/verify_otp', {
         email, 
         otp: otp.join('')
       });
@@ -46,7 +46,7 @@ export default function OtpVerification() {
 
   const handleResend = async () => {
     try {
-      const response = await axios.post('http://localhost:5000/api/auth/resend_otp', {
+      const response = await axios.post('http://192.168.10.7:5000/api/auth/resend_otp', {
         email,
       });
 
